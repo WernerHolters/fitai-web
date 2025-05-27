@@ -11,6 +11,9 @@ export default function AdminDashboard() {
         <Link to="/ingredients" className="list-group-item list-group-item-action">
           Gestionar Ingredientes
         </Link>
+        <Link to="/dishes" className="list-group-item list-group-item-action">
+          Gestionar Platos
+        </Link>
       </div>
     </div>
   );
