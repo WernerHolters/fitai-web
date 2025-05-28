@@ -1,0 +1,10 @@
+.ingredient-list {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.ingredient-list .badge {
+  font-size: 0.75rem;
+}

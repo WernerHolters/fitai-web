@@ -10,7 +10,7 @@ export const testApiConnectivity = async (baseUrl = 'http://localhost:8080/api')
     console.log('Testing GET request to API...');
     const getResponse = await axios.get(`${baseUrl}/exercises`);
     console.log('GET request successful:', getResponse.status);
-    
+
     // Test OPTIONS request (for CORS)
     console.log('Testing OPTIONS request (CORS preflight)...');
     const optionsResponse = await axios({
