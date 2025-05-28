@@ -21,7 +21,7 @@ export default function ExerciseForm() {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
   const fileInputRef = useRef(null);
-  
+
   useEffect(() => {
     const loadMuscleGroups = async () => {
       const response = await getAllMuscleGroups();
@@ -85,23 +85,85 @@ export default function ExerciseForm() {
       muscleGroups: selectedMuscleGroups.map(id => ({ id })),
       hasImage: Boolean(imageFile || imagePreview)
     };
-    
-    try {
+      try {
       let savedExerciseId;
+      let responseData;
+      
       if (id) {
-        await updateExercise(id, exerciseToSubmit);
+        const updateResponse = await updateExercise(id, exerciseToSubmit);
+        responseData = updateResponse.data;
         savedExerciseId = id;
+        console.log('Exercise updated, response:', responseData);
       } else {
         const response = await createExercise(exerciseToSubmit);
-        savedExerciseId = response.data.id;
+        responseData = response.data;
+        // Check both common patterns for ID in response
+        savedExerciseId = responseData.id || responseData.exerciseId;
+        console.log('Exercise created, response:', responseData, 'ID extracted:', savedExerciseId);
       }
-
-      // Upload image if a new file was selected
+      
+      if (!savedExerciseId) {
+        console.error('Could not determine exercise ID from response:', responseData);
+        alert('Se guardó el ejercicio pero no se pudo determinar su ID para asociar la imagen.');
+        navigate('/exercises');
+        return;
+      }
+        // Upload image if a new file was selected
       if (imageFile) {
         try {
-          await uploadMedia('exercise', savedExerciseId, imageFile);
+          console.log('Attempting to upload image for exercise ID:', savedExerciseId);
+          console.log('Image file details:', {
+            name: imageFile.name,
+            type: imageFile.type,
+            size: imageFile.size,
+            lastModified: new Date(imageFile.lastModified).toISOString()
+          });
+          
+          // Validate file before upload
+          if (!imageFile.type.startsWith('image/')) {
+            throw new Error(`File type ${imageFile.type} is not an image`);
+          }
+          
+          // Try with string ID first (confirmed working via API test)
+          try {
+            const uploadResponse = await uploadMedia('exercise', savedExerciseId, imageFile);
+            console.log('Image upload successful:', uploadResponse);
+            
+            // Show success message
+            alert('Ejercicio y imagen guardados correctamente.');
+          } catch (stringIdError) {
+            console.log('Failed with string ID, trying numeric ID...');
+            const numericId = parseInt(savedExerciseId, 10);
+            if (!isNaN(numericId)) {
+              try {
+                const uploadResponse = await uploadMedia('exercise', numericId, imageFile);
+                console.log('Image upload successful with numeric ID:', uploadResponse);
+                
+                // Show success message
+                alert('Ejercicio y imagen guardados correctamente.');
+              } catch (numericIdError) {
+                console.error('Failed with both string and numeric IDs:', {
+                  stringError: stringIdError.message,
+                  numericError: numericIdError.message
+                });
+                throw new Error('Failed to upload with both string and numeric IDs');
+              }
+            } else {
+              throw stringIdError;
+            }
+          }
         } catch (imageError) {
           console.error('Error uploading image:', imageError);
+          
+          // More detailed error reporting
+          let errorMessage = 'Se guardó el ejercicio pero hubo un problema al subir la imagen.';
+          if (imageError.response) {
+            errorMessage += ` Error ${imageError.response.status}: ${JSON.stringify(imageError.response.data)}`;
+          } else if (imageError.message) {
+            errorMessage += ` ${imageError.message}`;
+          }
+          
+          alert(errorMessage);
           // Continue even if image upload fails
         }
       }

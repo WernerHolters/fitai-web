@@ -35,6 +35,8 @@ import WorkoutPlanForm from './Components/WorkoutPlanForm';
 import MealPlanList from './Components/MealPlanList';
 import MealPlanForm from './Components/MealPlanForm';
 
+import ImageUploadTest from './Components/ImageUploadTest';
+
 import AdminDashboard from './Pages/AdminDashboard';
 
 
@@ -99,6 +101,9 @@ function App() {
         <Route path="/meal-plans" element={<MealPlanList />} />
         <Route path="/meal-plans/new" element={<MealPlanForm />} />
         <Route path="/meal-plans/edit/:id" element={<MealPlanForm />} />
+
+        {/* Image Upload Test */}
+        <Route path="/image-upload-test" element={<ImageUploadTest />} />
 
         {/* Ruta por defecto */}
         <Route path="*" element={<AdminDashboard />} />      </Routes>

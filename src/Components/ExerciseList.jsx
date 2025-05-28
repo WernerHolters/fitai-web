@@ -50,14 +50,19 @@ export default function ExerciseList() {
             </thead>
             <tbody>
               {exercises.map((exercise) => (
-                <tr key={exercise.id}>
-                  <td>
+                <tr key={exercise.id}>                  <td>
                     {exercise.hasImage ? (
                       <img 
                         src={getMediaUrl('exercise', exercise.id)}
                         alt={exercise.name}
                         className="img-thumbnail"
                         style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                        onError={(e) => {
+                          console.error(`Failed to load image for exercise ${exercise.id}`);
+                          e.target.onerror = null;
+                          e.target.src = 'https://via.placeholder.com/50?text=Error';
+                          e.target.title = 'Error loading image';
+                        }}
                       />
                     ) : (
                       <span className="badge bg-secondary">

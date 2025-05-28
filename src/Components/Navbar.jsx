@@ -98,6 +98,12 @@ export default function Navbar() {
                 </li>
               </ul>
             </li>
+          </ul>          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/image-upload-test">
+                <i className="fas fa-upload me-1"></i>Test de Imágenes
+              </Link>
+            </li>
           </ul>
           <span className="navbar-text text-white">
             Admin Panel
