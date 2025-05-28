@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import UnitOfMeasureList from './components/UnitOfMeasureList';
-import UnitOfMeasureForm from './components/UnitOfMeasureForm';
+import Navbar from './Components/Navbar';
+
+import UnitOfMeasureList from './Components/UnitOfMeasureList';
+import UnitOfMeasureForm from './Components/UnitOfMeasureForm';
 
 import IngredientList from './Components/IngredientList';
 import IngredientForm from './Components/IngredientForm';
@@ -39,6 +41,8 @@ import AdminDashboard from './Pages/AdminDashboard';
 function App() {
   return (
     <Router>
+      <Navbar />
+      <div className="main-container">
       <Routes>
         {/* Dashboard principal */}
         <Route path="/" element={<AdminDashboard />} />
@@ -97,8 +101,8 @@ function App() {
         <Route path="/meal-plans/edit/:id" element={<MealPlanForm />} />
 
         {/* Ruta por defecto */}
-        <Route path="*" element={<AdminDashboard />} />
-      </Routes>
+        <Route path="*" element={<AdminDashboard />} />      </Routes>
+      </div>
     </Router>
   );
 }
