@@ -1,9 +1,8 @@
-
 :root {
   /* Primary color palette */
-  --primary: #4CAF50;
-  --primary-dark: #388E3C;
-  --primary-light: #81C784;
+  --primary: #4c6aaf;
+  --primary-dark: #385f8e;
+  --primary-light: #8195c7;
   --primary-bg: #E8F5E9;
   
   /* Accent colors */
