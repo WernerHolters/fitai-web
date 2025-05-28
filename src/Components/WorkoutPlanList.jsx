@@ -19,39 +19,59 @@ export default function WorkoutPlanList() {
       await deleteWorkoutPlan(id);
       loadData();
     }
-  };
-  return (
+  };  return (
     <div className="container mt-4">
-      <h2>Workout Plans</h2>
-      <Link to="/workout-plans/new" className="btn btn-primary mb-2">Add New</Link>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Duration</th>
-            <th>Level</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {workoutPlans.map((plan) => (
-            <tr key={plan.id}>
-              <td>{plan.name}</td>
-              <td>{plan.duration}</td>
-              <td>{plan.level}</td>
-              <td>
-                <Link to={`/workout-plans/edit/${plan.id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(plan.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="form-header">
+          <i className="fas fa-calendar-alt me-2 text-primary"></i>
+          Planes de Entrenamiento
+        </h2>
+        <Link to="/workout-plans/new" className="btn btn-primary">
+          <i className="fas fa-plus me-2"></i>Nuevo Plan
+        </Link>
+      </div>
+      
+      <div className="card fitai-card">
+        <div className="card-body p-0">
+          <table className="table fitai-table mb-0">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Duración</th>
+                <th>Nivel</th>
+                <th>Descripción</th>
+                <th className="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workoutPlans.map((plan) => (
+                <tr key={plan.id}>
+                  <td>{plan.name}</td>
+                  <td><span className="badge bg-info">{plan.duration}</span></td>
+                  <td>
+                    <span className={`badge ${plan.level === 'Beginner' ? 'bg-success' : 
+                      plan.level === 'Intermediate' ? 'bg-warning' : 'bg-danger'}`}>
+                      {plan.level}
+                    </span>
+                  </td>
+                  <td>{plan.description}</td>
+                  <td className="text-center">
+                    <Link to={`/workout-plans/edit/${plan.id}`} className="btn btn-warning btn-sm btn-action me-2">
+                      <i className="fas fa-edit"></i> Editar
+                    </Link>
+                    <button
+                      className="btn btn-danger btn-sm btn-action"
+                      onClick={() => handleDelete(plan.id)}
+                    >
+                      <i className="fas fa-trash"></i> Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

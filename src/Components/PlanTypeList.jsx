@@ -22,40 +22,54 @@ export default function PlanTypeList() {
   };
   return (
     <div className="container mt-4">
-      <h2>Plan Types</h2>
-      <Link to="/plan-types/new" className="btn btn-primary mb-2">Add New</Link>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Objective</th>
-            <th>Duration</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {planTypes.map((planType) => (
-            <tr key={planType.id}>
-              <td>{planType.name}</td>
-              <td>{planType.description}</td>
-              <td>{planType.objective}</td>
-              <td>{planType.duration}</td>
-              <td>{planType.image ? 'Yes' : 'No'}</td>
-              <td>
-                <Link to={`/plan-types/edit/${planType.id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(planType.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="form-header">
+          <i className="fas fa-list-alt me-2 text-primary"></i>
+          Tipos de Plan
+        </h2>
+        <Link to="/plan-types/new" className="btn btn-primary">
+          <i className="fas fa-plus me-2"></i>Nuevo Tipo
+        </Link>
+      </div>
+      
+      <div className="card fitai-card">
+        <div className="card-body p-0">
+          <table className="table fitai-table mb-0">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Objetivo</th>
+                <th>Duración</th>
+                <th>Imagen</th>
+                <th className="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {planTypes.map((planType) => (
+                <tr key={planType.id}>
+                  <td>{planType.name}</td>
+                  <td>{planType.description}</td>
+                  <td>{planType.objective}</td>
+                  <td>{planType.duration}</td>
+                  <td>{planType.image ? 'Sí' : 'No'}</td>
+                  <td className="text-center">
+                    <Link to={`/plan-types/edit/${planType.id}`} className="btn btn-warning btn-sm btn-action me-2">
+                      <i className="fas fa-edit"></i> Editar
+                    </Link>
+                    <button
+                      className="btn btn-danger btn-sm btn-action"
+                      onClick={() => handleDelete(planType.id)}
+                    >
+                      <i className="fas fa-trash"></i> Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

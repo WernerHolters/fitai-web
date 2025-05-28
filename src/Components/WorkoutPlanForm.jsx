@@ -4,11 +4,11 @@ import { getWorkoutPlanById, createWorkoutPlan, updateWorkoutPlan } from '../Ser
 
 export default function WorkoutPlanForm() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [workoutPlan, setWorkoutPlan] = useState({
+  const navigate = useNavigate();  const [workoutPlan, setWorkoutPlan] = useState({
     name: '',
     duration: '',
-    level: ''
+    level: '',
+    description: ''
   });
   useEffect(() => {
     if (id) {
@@ -41,51 +41,76 @@ export default function WorkoutPlanForm() {
   };
   return (
     <div className="container mt-4">
-      <h2>{id ? 'Edit' : 'Create'} Workout Plan</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            value={workoutPlan.name}
-            onChange={handleChange}
-            required
-          />
+      <div className="card fitai-card">
+        <div className="card-body">
+          <h2 className="form-header mb-4">
+            <i className="fas fa-calendar-alt me-2 text-primary"></i>
+            {id ? 'Editar' : 'Crear'} Plan de Entrenamiento
+          </h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">Nombre</label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={workoutPlan.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="duration" className="form-label">Duración</label>
+              <input
+                type="text"
+                className="form-control"
+                id="duration"
+                name="duration"
+                value={workoutPlan.duration}
+                onChange={handleChange}
+                placeholder="ej. 4 semanas, 3 meses"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="level" className="form-label">Nivel</label>
+              <select
+                className="form-select"
+                id="level"
+                name="level"
+                value={workoutPlan.level}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Seleccionar nivel</option>
+                <option value="Beginner">Principiante</option>
+                <option value="Intermediate">Intermedio</option>
+                <option value="Advanced">Avanzado</option>
+              </select>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">Descripción</label>
+              <textarea
+                className="form-control"
+                id="description"
+                name="description"
+                value={workoutPlan.description || ''}
+                onChange={handleChange}
+                rows="4"
+              />
+            </div>
+            <div className="d-flex justify-content-end gap-2">
+              <button type="button" className="btn btn-secondary" onClick={() => navigate('/workout-plans')}>
+                <i className="fas fa-times me-2"></i>Cancelar
+              </button>
+              <button type="submit" className="btn btn-primary">
+                <i className="fas fa-save me-2"></i>Guardar
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="mb-3">
-          <label htmlFor="duration" className="form-label">Duration</label>
-          <input
-            type="text"
-            className="form-control"
-            id="duration"
-            name="duration"
-            value={workoutPlan.duration}
-            onChange={handleChange}
-            placeholder="e.g. 4 weeks, 3 months"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="level" className="form-label">Level</label>
-          <select
-            className="form-select"
-            id="level"
-            name="level"
-            value={workoutPlan.level}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select a level</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">Save</button>
-      </form>
+      </div>
     </div>
   );
 }

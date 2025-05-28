@@ -23,34 +23,48 @@ export default function MuscleGroupList() {
 
   return (
     <div className="container mt-4">
-      <h2>Muscle Groups</h2>
-      <Link to="/muscle-groups/new" className="btn btn-primary mb-2">Add New</Link>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {muscleGroups.map((group) => (
-            <tr key={group.id}>
-              <td>{group.name}</td>
-              <td>{group.description}</td>
-              <td>
-                <Link to={`/muscle-groups/edit/${group.id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(group.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="form-header">
+          <i className="fas fa-dumbbell me-2 text-primary"></i>
+          Grupos Musculares
+        </h2>
+        <Link to="/muscle-groups/new" className="btn btn-primary">
+          <i className="fas fa-plus me-2"></i>Nuevo Grupo
+        </Link>
+      </div>
+      
+      <div className="card fitai-card">
+        <div className="card-body p-0">
+          <table className="table fitai-table mb-0">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th className="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {muscleGroups.map((group) => (
+                <tr key={group.id}>
+                  <td>{group.name}</td>
+                  <td>{group.description}</td>
+                  <td className="text-center">
+                    <Link to={`/muscle-groups/edit/${group.id}`} className="btn btn-warning btn-sm btn-action me-2">
+                      <i className="fas fa-edit"></i> Editar
+                    </Link>
+                    <button
+                      className="btn btn-danger btn-sm btn-action"
+                      onClick={() => handleDelete(group.id)}
+                    >
+                      <i className="fas fa-trash"></i> Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

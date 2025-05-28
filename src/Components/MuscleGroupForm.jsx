@@ -42,33 +42,48 @@ export default function MuscleGroupForm() {
 
   return (
     <div className="container mt-4">
-      <h2>{id ? 'Edit' : 'Create'} Muscle Group</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            value={muscleGroup.name}
-            onChange={handleChange}
-            required
-          />
+      <div className="card fitai-card">
+        <div className="card-body">
+          <h2 className="form-header mb-4">
+            <i className="fas fa-dumbbell me-2 text-primary"></i>
+            {id ? 'Editar' : 'Crear'} Grupo Muscular
+          </h2>
+          
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">Nombre</label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={muscleGroup.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">Descripción</label>
+              <textarea
+                className="form-control"
+                id="description"
+                name="description"
+                value={muscleGroup.description}
+                onChange={handleChange}
+                rows="3"
+              ></textarea>
+            </div>
+            <div className="d-flex justify-content-end gap-2">
+              <button type="button" className="btn btn-secondary" onClick={() => navigate('/muscle-groups')}>
+                <i className="fas fa-times me-2"></i>Cancelar
+              </button>
+              <button type="submit" className="btn btn-primary">
+                <i className="fas fa-save me-2"></i>Guardar
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">Description</label>
-          <textarea
-            className="form-control"
-            id="description"
-            name="description"
-            value={muscleGroup.description}
-            onChange={handleChange}
-            rows="3"
-          ></textarea>
-        </div>
-        <button type="submit" className="btn btn-primary">Save</button>
-      </form>
+      </div>
     </div>
   );
 }
