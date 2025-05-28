@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPlanTypeById, createPlanType, updatePlanType } from '../Services/PlanTypeService';
+import { uploadMedia, getMediaUrl } from '../Services/MediaService';
 
 export default function PlanTypeForm() {
   const { id } = useParams();
@@ -14,11 +15,20 @@ export default function PlanTypeForm() {
     image: ''
   });
 
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+  const fileInputRef = useRef(null);
+
   useEffect(() => {
     if (id) {
       const loadPlanType = async () => {
         const response = await getPlanTypeById(id);
         setPlanType(response.data);
+        
+        // If the plan type has an image, set the preview
+        if (response.data.hasImage) {
+          setImagePreview(getMediaUrl('plan-type', response.data.id));
+        }
       };
       loadPlanType();
     }
@@ -28,16 +38,52 @@ export default function PlanTypeForm() {
     const { name, value } = e.target;
     setPlanType({ ...planType, [name]: value });
   };
+  
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+  
+  const handleImageRemove = () => {
+    setImageFile(null);
+    setImagePreview('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Create a copy of planType with the hasImage flag
+    const planTypeToSubmit = {
+      ...planType,
+      hasImage: Boolean(imageFile || imagePreview)
+    };
+    
     try {
+      let savedPlanTypeId;
       if (id) {
-        await updatePlanType(id, planType);
+        await updatePlanType(id, planTypeToSubmit);
+        savedPlanTypeId = id;
       } else {
-        await createPlanType(planType);
+        const response = await createPlanType(planTypeToSubmit);
+        savedPlanTypeId = response.data.id;
       }
+
+      // Upload image if a new file was selected
+      if (imageFile) {
+        try {
+          await uploadMedia('plan-type', savedPlanTypeId, imageFile);
+        } catch (imageError) {
+          console.error('Error uploading image:', imageError);
+          // Continue even if image upload fails
+        }
+      }
+      
       navigate('/plan-types');
     } catch (error) {
       console.error('Error saving plan type:', error);
@@ -101,15 +147,37 @@ export default function PlanTypeForm() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="image" className="form-label">URL de Imagen</label>
-              <input
-                type="text"
-                className="form-control"
-                id="image"
-                name="image"
-                value={planType.image}
-                onChange={handleChange}
-              />
+              <label htmlFor="imageFile" className="form-label">Imagen</label>
+              <div className="d-flex align-items-center mb-2">
+                <input
+                  type="file"
+                  className="form-control"
+                  id="imageFile"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
+                />
+                {imagePreview && (
+                  <button 
+                    type="button" 
+                    className="btn btn-outline-danger ms-2" 
+                    onClick={handleImageRemove}
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                )}
+              </div>
+              
+              {imagePreview && (
+                <div className="mt-2">
+                  <img 
+                    src={imagePreview} 
+                    alt="Vista previa de imagen" 
+                    style={{ maxWidth: '200px', maxHeight: '150px' }} 
+                    className="img-thumbnail"
+                  />
+                </div>
+              )}
             </div>
             <div className="d-flex justify-content-end gap-2">
               <button type="button" className="btn btn-secondary" onClick={() => navigate('/plan-types')}>

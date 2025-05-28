@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllExercises, deleteExercise } from '../Services/ExerciseService';
 import { Link } from 'react-router-dom';
+import { getMediaUrl } from '../Services/MediaService';
 
 export default function ExerciseList() {
   const [exercises, setExercises] = useState([]);
@@ -38,6 +39,7 @@ export default function ExerciseList() {
           <table className="table fitai-table mb-0">
             <thead>
               <tr>
+                <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Equipamiento</th>
@@ -49,6 +51,20 @@ export default function ExerciseList() {
             <tbody>
               {exercises.map((exercise) => (
                 <tr key={exercise.id}>
+                  <td>
+                    {exercise.hasImage ? (
+                      <img 
+                        src={getMediaUrl('exercise', exercise.id)}
+                        alt={exercise.name}
+                        className="img-thumbnail"
+                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <span className="badge bg-secondary">
+                        <i className="fas fa-image"></i> No imagen
+                      </span>
+                    )}
+                  </td>
                   <td>{exercise.name}</td>
                   <td>{exercise.description}</td>
                   <td>{exercise.equipment}</td>

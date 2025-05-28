@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllWorkoutPlans, deleteWorkoutPlan } from '../Services/WorkoutPlanService';
 import { Link } from 'react-router-dom';
+import { getMediaUrl } from '../Services/MediaService';
 
 export default function WorkoutPlanList() {
   const [workoutPlans, setWorkoutPlans] = useState([]);
@@ -19,7 +20,9 @@ export default function WorkoutPlanList() {
       await deleteWorkoutPlan(id);
       loadData();
     }
-  };  return (
+  };
+  
+  return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="form-header">
@@ -36,6 +39,7 @@ export default function WorkoutPlanList() {
           <table className="table fitai-table mb-0">
             <thead>
               <tr>
+                <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Duración</th>
                 <th>Nivel</th>
@@ -46,6 +50,20 @@ export default function WorkoutPlanList() {
             <tbody>
               {workoutPlans.map((plan) => (
                 <tr key={plan.id}>
+                  <td>
+                    {plan.hasImage ? (
+                      <img 
+                        src={getMediaUrl('workout-plan', plan.id)}
+                        alt={plan.name}
+                        className="img-thumbnail"
+                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <span className="badge bg-secondary">
+                        <i className="fas fa-image"></i> No imagen
+                      </span>
+                    )}
+                  </td>
                   <td>{plan.name}</td>
                   <td><span className="badge bg-info">{plan.duration}</span></td>
                   <td>

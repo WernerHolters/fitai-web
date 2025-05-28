@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllPlanTypes, deletePlanType } from '../Services/PlanTypeService';
 import { Link } from 'react-router-dom';
+import { getMediaUrl } from '../Services/MediaService';
 
 export default function PlanTypeList() {
   const [planTypes, setPlanTypes] = useState([]);
@@ -37,22 +38,35 @@ export default function PlanTypeList() {
           <table className="table fitai-table mb-0">
             <thead>
               <tr>
+                <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Objetivo</th>
                 <th>Duración</th>
-                <th>Imagen</th>
                 <th className="text-center">Acciones</th>
               </tr>
             </thead>
             <tbody>
               {planTypes.map((planType) => (
                 <tr key={planType.id}>
+                  <td>
+                    {planType.hasImage ? (
+                      <img 
+                        src={getMediaUrl('plan-type', planType.id)}
+                        alt={planType.name}
+                        className="img-thumbnail"
+                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <span className="badge bg-secondary">
+                        <i className="fas fa-image"></i> No imagen
+                      </span>
+                    )}
+                  </td>
                   <td>{planType.name}</td>
                   <td>{planType.description}</td>
                   <td>{planType.objective}</td>
                   <td>{planType.duration}</td>
-                  <td>{planType.image ? 'Sí' : 'No'}</td>
                   <td className="text-center">
                     <Link to={`/plan-types/edit/${planType.id}`} className="btn btn-warning btn-sm btn-action me-2">
                       <i className="fas fa-edit"></i> Editar

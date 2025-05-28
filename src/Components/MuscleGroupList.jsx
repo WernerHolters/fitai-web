@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllMuscleGroups, deleteMuscleGroup } from '../Services/MuscleGroupService';
 import { Link } from 'react-router-dom';
+import { getMediaUrl } from '../Services/MediaService';
 
 export default function MuscleGroupList() {
   const [muscleGroups, setMuscleGroups] = useState([]);
@@ -38,6 +39,7 @@ export default function MuscleGroupList() {
           <table className="table fitai-table mb-0">
             <thead>
               <tr>
+                <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th className="text-center">Acciones</th>
@@ -46,6 +48,20 @@ export default function MuscleGroupList() {
             <tbody>
               {muscleGroups.map((group) => (
                 <tr key={group.id}>
+                  <td>
+                    {group.hasImage ? (
+                      <img 
+                        src={getMediaUrl('muscle-group', group.id)}
+                        alt={group.name}
+                        className="img-thumbnail"
+                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <span className="badge bg-secondary">
+                        <i className="fas fa-image"></i> No imagen
+                      </span>
+                    )}
+                  </td>
                   <td>{group.name}</td>
                   <td>{group.description}</td>
                   <td className="text-center">
