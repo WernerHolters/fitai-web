@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { uploadMedia, testMediaFetch, getMediaUrl } from '../Services/MediaService';
 import { testApiConnectivity, testMinimalFileUpload } from '../Services/ApiTest';
 

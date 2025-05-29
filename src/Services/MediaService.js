@@ -4,12 +4,12 @@ const API_URL = 'http://localhost:8080/api/media';
 
 // Map frontend entity types to backend entity types if necessary
 const ENTITY_TYPE_MAPPING = {
-  'exercise': 'exercise',
-  'workout-plan': 'workoutPlan', // Possible backend naming (camelCase)
-  'muscle-group': 'muscleGroup', // Possible backend naming (camelCase)
-  'plan-type': 'planType',       // Possible backend naming (camelCase)
-  'recipe': 'recipe',
-  'dish': 'dish'
+  'exercise': 'Exercise',
+  'workout-plan': 'WorkoutPlan', // Possible backend naming (camelCase)
+  'muscle-group': 'MuscleGroup', // Possible backend naming (camelCase)
+  'plan-type': 'PlanType',       // Possible backend naming (camelCase)
+  'recipe': 'Recipe',
+  'dish': 'Dish'
 };
 
 /**
@@ -130,7 +130,8 @@ export const getMediaUrl = (entityType, entityId) => {
  */
 export const testMediaFetch = async (entityType, entityId) => {
   try {
-    const url = getMediaUrl(entityType, entityId);
+    const mappedEntityType = ENTITY_TYPE_MAPPING[entityType] || entityType;
+    const url = getMediaUrl(mappedEntityType, entityId);
     console.log(`Testing media fetch from URL: ${url}`);
     
     // Test fetch with Axios
