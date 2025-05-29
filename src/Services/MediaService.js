@@ -119,7 +119,8 @@ export const uploadMedia = async (entityType, entityId, file) => {
  * @returns {string} - The URL to stream the media
  */
 export const getMediaUrl = (entityType, entityId) => {
-  return `${API_URL}/stream/${entityType}/${entityId}`;
+  const mappedEntityType = ENTITY_TYPE_MAPPING[entityType] || entityType;
+  return `${API_URL}/stream/${mappedEntityType}/${entityId}`;
 };
 
 /**
@@ -130,8 +131,7 @@ export const getMediaUrl = (entityType, entityId) => {
  */
 export const testMediaFetch = async (entityType, entityId) => {
   try {
-    const mappedEntityType = ENTITY_TYPE_MAPPING[entityType] || entityType;
-    const url = getMediaUrl(mappedEntityType, entityId);
+    const url = getMediaUrl(entityType, entityId);
     console.log(`Testing media fetch from URL: ${url}`);
     
     // Test fetch with Axios
