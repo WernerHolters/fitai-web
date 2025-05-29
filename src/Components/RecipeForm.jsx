@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getRecipeById, createRecipe, updateRecipe } from '../Services/RecipeService';
 import { getAllIngredients } from '../Services/IngredientService';
-import { getAllUnits } from '../Services/unitOfMeasureService';
+import { getAllUnits } from '../Services/UnitOfMeasureService';
 
 export default function RecipeForm() {
   const { id } = useParams();
