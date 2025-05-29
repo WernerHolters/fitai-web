@@ -38,7 +38,7 @@ export const uploadMedia = async (entityType, entityId, file) => {
   console.log('FormData created with file:', file.name, 'type:', file.type, 'size:', file.size);
   
   // Test direct API URL (confirmed working with curl test)
-  const directUrl = `${API_URL}/upload/${entityType}/${entityId}`;
+  const directUrl = `${API_URL}/upload/${mappedEntityType}/${entityId}`;
   console.log(`Trying direct upload URL: ${directUrl}`);
   
   try {
