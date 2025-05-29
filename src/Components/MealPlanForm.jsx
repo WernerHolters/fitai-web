@@ -57,9 +57,7 @@ export default function MealPlanForm() {
     }
   }, [mealPlanRaw, dishes]);
 
-  useEffect(() => {
-    console.log("MealPlan actualizado:", mealPlan);
-  }, [mealPlan]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -86,7 +84,7 @@ export default function MealPlanForm() {
         dishes: mealPlan.dishIds.map(id => ({id})),
       };
 
-      console.log('Enviando plan:', mealPlanData);
+      
 
       if (id) {
         await updateMealPlan(id, mealPlanData);
