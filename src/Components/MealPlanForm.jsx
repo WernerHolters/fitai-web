@@ -15,7 +15,6 @@ export default function MealPlanForm() {
     dishIds: []
   });
 
-  const [mealPlanRaw, setMealPlanRaw] = useState(null); // ⬅️ Estado intermedio para sincronización
   const [planTypes, setPlanTypes] = useState([]);
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,7 +33,9 @@ export default function MealPlanForm() {
 
         if (id) {
           const mealPlanResponse = await getMealPlanById(id);
-          setMealPlanRaw(mealPlanResponse.data); // ⬅️ Seteamos sin transformar
+          const data = mealPlanResponse.data;
+          const dishIds = data.dishes?.map(d => d.id) || [];
+          setMealPlan({ ...data, dishIds });
         }
       } catch (error) {
         console.error('Error loading initial data:', error);
@@ -45,19 +46,6 @@ export default function MealPlanForm() {
 
     loadInitialData();
   }, [id]);
-
-  // ⬇️ Sincronizamos mealPlan cuando dishes y mealPlanRaw están listos
-  useEffect(() => {
-    if (mealPlanRaw && dishes.length > 0) {
-      const dishIds = mealPlanRaw.dishes ? mealPlanRaw.dishes.map(dish => dish.id) : [];
-      setMealPlan({
-        ...mealPlanRaw,
-        dishIds
-      });
-    }
-  }, [mealPlanRaw, dishes]);
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,16 +69,15 @@ export default function MealPlanForm() {
         name: mealPlan.name,
         description: mealPlan.description,
         planTypeId: mealPlan.planTypeId ? Number(mealPlan.planTypeId) : null,
-        dishes: mealPlan.dishIds.map(id => ({id})),
+        dishes: mealPlan.dishIds.map(id => ({ id })) // ✅ esto es lo que backend espera
       };
-
-      
 
       if (id) {
         await updateMealPlan(id, mealPlanData);
       } else {
         await createMealPlan(mealPlanData);
       }
+
       navigate('/meal-plans');
     } catch (error) {
       console.error('Error saving meal plan:', error);
