@@ -6,41 +6,35 @@ import { getAllDishes } from '../Services/DishService';
 
 export default function MealPlanForm() {
   const { id } = useParams();
-  const navigate = useNavigate();  const [mealPlan, setMealPlan] = useState({
+  const navigate = useNavigate();
+
+  const [mealPlan, setMealPlan] = useState({
     name: '',
     description: '',
     planTypeId: '',
     dishIds: []
   });
-  
+
+  const [mealPlanRaw, setMealPlanRaw] = useState(null); // ⬅️ Estado intermedio para sincronización
   const [planTypes, setPlanTypes] = useState([]);
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const loadInitialData = async () => {
       setLoading(true);
       try {
-        // Load plan types and dishes in parallel
         const [planTypesResponse, dishesResponse] = await Promise.all([
           getAllPlanTypes(),
           getAllDishes()
         ]);
-        
+
         setPlanTypes(planTypesResponse.data);
         setDishes(dishesResponse.data);
-        
-        // If editing an existing meal plan, load its data
+
         if (id) {
           const mealPlanResponse = await getMealPlanById(id);
-          const mealPlanData = mealPlanResponse.data;
-          
-          // Extract dish IDs from the dishes array if exists
-          const dishIds = mealPlanData.dishes ? mealPlanData.dishes.map(dish => dish.id) : [];
-          
-          setMealPlan({
-            ...mealPlanData,
-            dishIds
-          });
+          setMealPlanRaw(mealPlanResponse.data); // ⬅️ Seteamos sin transformar
         }
       } catch (error) {
         console.error('Error loading initial data:', error);
@@ -48,19 +42,30 @@ export default function MealPlanForm() {
         setLoading(false);
       }
     };
-    
+
     loadInitialData();
   }, [id]);
 
+  // ⬇️ Sincronizamos mealPlan cuando dishes y mealPlanRaw están listos
   useEffect(() => {
-  console.log("MealPlan actualizado:", mealPlan);
-}, [mealPlan]);
+    if (mealPlanRaw && dishes.length > 0) {
+      const dishIds = mealPlanRaw.dishes ? mealPlanRaw.dishes.map(dish => dish.id) : [];
+      setMealPlan({
+        ...mealPlanRaw,
+        dishIds
+      });
+    }
+  }, [mealPlanRaw, dishes]);
+
+  useEffect(() => {
+    console.log("MealPlan actualizado:", mealPlan);
+  }, [mealPlan]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setMealPlan({ ...mealPlan, [name]: value });
+    setMealPlan(prev => ({ ...prev, [name]: value }));
   };
-  
+
   const handleDishChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, option => Number(option.value));
     setMealPlan(prev => ({
@@ -68,22 +73,20 @@ export default function MealPlanForm() {
       dishIds: selectedOptions
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
-      // Prepare meal plan data for submission
-      console.log(mealPlan.dishIds || 'no dish ids');
       const mealPlanData = {
         name: mealPlan.name,
         description: mealPlan.description,
         planTypeId: mealPlan.planTypeId ? Number(mealPlan.planTypeId) : null,
-        dishIds: mealPlan.dishIds || []
+        dishes: mealPlan.dishIds.map(id => ({id})),
       };
 
-      console.log(mealPlanData);
-      
+      console.log('Enviando plan:', mealPlanData);
 
       if (id) {
         await updateMealPlan(id, mealPlanData);
@@ -97,6 +100,7 @@ export default function MealPlanForm() {
       setLoading(false);
     }
   };
+
   return (
     <div className="container mt-4">
       <div className="card fitai-card">
@@ -108,7 +112,6 @@ export default function MealPlanForm() {
         </div>
         <div className="card-body">
           {loading && <div className="alert alert-info">Cargando...</div>}
-          
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">Nombre *</label>
@@ -123,7 +126,7 @@ export default function MealPlanForm() {
                 disabled={loading}
               />
             </div>
-            
+
             <div className="mb-3">
               <label htmlFor="description" className="form-label">Descripción</label>
               <textarea
@@ -136,7 +139,7 @@ export default function MealPlanForm() {
                 disabled={loading}
               ></textarea>
             </div>
-            
+
             <div className="mb-3">
               <label htmlFor="planTypeId" className="form-label">Tipo de Plan</label>
               <select
@@ -155,7 +158,7 @@ export default function MealPlanForm() {
                 ))}
               </select>
             </div>
-            
+
             <div className="mb-3">
               <label htmlFor="dishIds" className="form-label">Platos</label>
               <select
@@ -178,7 +181,7 @@ export default function MealPlanForm() {
                 Mantén pulsado Ctrl (o Cmd en Mac) para seleccionar múltiples platos.
               </small>
             </div>
-            
+
             <div className="d-flex justify-content-end">
               <button
                 type="button"
