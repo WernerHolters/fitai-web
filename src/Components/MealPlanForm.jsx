@@ -51,6 +51,11 @@ export default function MealPlanForm() {
     
     loadInitialData();
   }, [id]);
+
+  useEffect(() => {
+  console.log("MealPlan actualizado:", mealPlan);
+}, [mealPlan]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setMealPlan({ ...mealPlan, [name]: value });
@@ -69,12 +74,16 @@ export default function MealPlanForm() {
     
     try {
       // Prepare meal plan data for submission
+      console.log(mealPlan.dishIds || 'no dish ids');
       const mealPlanData = {
         name: mealPlan.name,
         description: mealPlan.description,
         planTypeId: mealPlan.planTypeId ? Number(mealPlan.planTypeId) : null,
         dishIds: mealPlan.dishIds || []
       };
+
+      console.log(mealPlanData);
+      
 
       if (id) {
         await updateMealPlan(id, mealPlanData);

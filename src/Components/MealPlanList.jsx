@@ -74,6 +74,7 @@ export default function MealPlanList() {
                   </td>
                   <td>
                     {plan.dishes && plan.dishes.length > 0 ? (
+                      console.log(plan),
                       <div>
                         <span className="badge bg-info">{plan.dishes.length}</span> platos
                         <div className="dish-list">

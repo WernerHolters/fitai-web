@@ -15,9 +15,24 @@ const AiRecommendation = () => {
     setResult(null);
     try {
       const response = await askUser(userId, pregunta);
-      setResult(JSON.parse(response.data));
+      try {
+        // Si la respuesta ya es un objeto, úsala directamente
+        if (typeof response.data === 'object') {
+          setResult(response.data);
+        } else {
+          setResult(JSON.parse(response.data));
+        }
+      } catch (parseError) {
+        setError('Respuesta inesperada del backend: ' + JSON.stringify(response.data));
+      }
     } catch (err) {
-      setError('Error al obtener la recomendación');
+      if (err.response) {
+        setError('Error: ' + (err.response.data || err.message));
+      } else if (err.request) {
+        setError('No se recibió respuesta del servidor.');
+      } else {
+        setError('Error al obtener la recomendación: ' + err.message);
+      }
     }
     setLoading(false);
   };
@@ -54,21 +69,28 @@ const AiRecommendation = () => {
       {result && (
         <div className="card">
           <div className="card-body">
-            <h5>Usuario: {result.usuario}</h5>
-            <h6>Plan de Entrenamiento: {result.workoutPlanName} ({result.workoutPlanLevel})</h6>
-            <p>Duración: {result.workoutPlanDuration}</p>
-            <p>Descripción: {result.workoutPlanDescription}</p>
-            <h6>Ejercicios:</h6>
+            <h5 className="mb-3">Usuario: <b>{result.usuario}</b></h5>
+            <h6 className="mt-2">Plan de Entrenamiento</h6>
             <ul>
-              {result.workoutPlanExercises.map((ex, idx) => (
+              <li><b>Nombre:</b> {result.workoutPlanName}</li>
+              <li><b>Nivel:</b> {result.workoutPlanLevel}</li>
+              <li><b>Duración:</b> {result.workoutPlanDuration} min</li>
+              <li><b>Descripción:</b> {result.workoutPlanDescription}</li>
+            </ul>
+            <h6 className="mt-3">Ejercicios:</h6>
+            <ul>
+              {result.workoutPlanExercises && result.workoutPlanExercises.map((ex, idx) => (
                 <li key={idx}>
-                  <b>{ex.exercise.name}</b>: {ex.description} ({ex.sets}x{ex.repetitions})
+                  <b>{ex.exercise.name}</b> ({ex.exercise.description}) - {ex.sets}x{ex.repetitions} [{ex.exercise.equipment}]
                 </li>
               ))}
             </ul>
-            <h6>Plan de Alimentación: {result.mealPlanName}</h6>
-            <p>{result.mealPlanDescription}</p>
-            <h6>Razón:</h6>
+            <h6 className="mt-3">Plan de Alimentación</h6>
+            <ul>
+              <li><b>Nombre:</b> {result.mealPlanName}</li>
+              <li><b>Descripción:</b> {result.mealPlanDescription}</li>
+            </ul>
+            <h6 className="mt-3">Razón de la recomendación:</h6>
             <p>{result.reason}</p>
           </div>
         </div>
