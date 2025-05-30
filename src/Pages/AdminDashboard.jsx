@@ -41,10 +41,6 @@ export default function AdminDashboard() {
                   <div className="icon-container"><i className="fas fa-clipboard-list"></i></div>
                   Planes de Alimentación
                 </Link>
-                <Link to="/ai-recommendation" className="list-group-item list-group-item-action">
-                  <div className="icon-container"><i className="fas fa-robot"></i></div>
-                  Recomendación AI
-                </Link>
               </div>
             </div>
           </div>
