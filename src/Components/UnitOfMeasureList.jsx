@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllUnits, deleteUnit } from '../Services/unitOfMeasureService';
+import { getAllUnits, deleteUnit } from '../Services/UnitOfMeasureService';
 import { Link } from 'react-router-dom';
 import './UnitOfMeasureList.css';
 

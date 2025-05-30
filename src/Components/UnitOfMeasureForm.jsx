@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createUnit, getUnitById, updateUnit } from '../Services/unitOfMeasureService';
+import { createUnit, getUnitById, updateUnit } from '../Services/UnitOfMeasureService';
 import { getAllIngredients } from '../Services/IngredientService';
 
 export default function UnitOfMeasureForm() {
