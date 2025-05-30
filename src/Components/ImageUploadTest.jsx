@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { uploadMedia, testMediaFetch, getMediaUrl } from '../Services/MediaService';
 import { testApiConnectivity, testMinimalFileUpload } from '../Services/ApiTest';
 
@@ -12,6 +11,7 @@ export default function ImageUploadTest() {
   const [minimalUploadResult, setMinimalUploadResult] = useState(null);
   const [mediaFetchResult, setMediaFetchResult] = useState(null);
   const [fetchedImageUrl, setFetchedImageUrl] = useState('');
+  const [fetchedMediaType, setFetchedMediaType] = useState();
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -133,8 +133,10 @@ export default function ImageUploadTest() {
                   setMediaFetchResult(result);
                   if (result.success) {
                     setFetchedImageUrl(getMediaUrl(entityType, entityId || '1'));
+                    setFetchedMediaType(result.contentType); // NEW: set media type
                   } else {
                     setFetchedImageUrl('');
+                    setFetchedMediaType('');
                   }
                 }}
               >
@@ -183,17 +185,32 @@ export default function ImageUploadTest() {
                 
                 {fetchedImageUrl && (
                   <div className="mt-3">
-                    <h6>Fetched Image:</h6>
-                    <img 
-                      src={fetchedImageUrl} 
-                      alt="Fetched media" 
-                      className="img-thumbnail" 
-                      style={{ maxWidth: '200px', maxHeight: '200px' }}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://via.placeholder.com/200?text=Error+Loading+Image';
-                      }}
-                    />
+                    <h6>Fetched Media:</h6>
+                    {fetchedMediaType.startsWith('image/') ? (
+                        <img
+                            src={fetchedImageUrl}
+                            alt="Fetched media"
+                            className="img-thumbnail"
+                            style={{ maxWidth: '200px', maxHeight: '200px' }}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = 'https://via.placeholder.com/200?text=Error+Loading+Image';
+                            }}
+                        />
+                    ) : fetchedMediaType.startsWith('video/') ? (
+                        <video
+                            controls
+                            src={fetchedImageUrl}
+                            style={{ maxWidth: '300px', maxHeight: '300px' }}
+                            onError={(e) => {
+                              console.error('Video failed to load:', e);
+                            }}
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                    ) : (
+                        <div className="alert alert-warning">Unsupported media type: {fetchedMediaType}</div>
+                    )}
                   </div>
                 )}
               </div>

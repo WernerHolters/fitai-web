@@ -4,12 +4,12 @@ const API_URL = 'http://localhost:8080/api/media';
 
 // Map frontend entity types to backend entity types if necessary
 const ENTITY_TYPE_MAPPING = {
-  'exercise': 'exercise',
-  'workout-plan': 'workoutPlan', // Possible backend naming (camelCase)
-  'muscle-group': 'muscleGroup', // Possible backend naming (camelCase)
-  'plan-type': 'planType',       // Possible backend naming (camelCase)
-  'recipe': 'recipe',
-  'dish': 'dish'
+  'exercise': 'Exercise',
+  'workout-plan': 'WorkoutPlan', // Possible backend naming (camelCase)
+  'muscle-group': 'MuscleGroup', // Possible backend naming (camelCase)
+  'plan-type': 'PlanType',       // Possible backend naming (camelCase)
+  'recipe': 'Recipe',
+  'dish': 'Dish'
 };
 
 /**
@@ -38,7 +38,7 @@ export const uploadMedia = async (entityType, entityId, file) => {
   console.log('FormData created with file:', file.name, 'type:', file.type, 'size:', file.size);
   
   // Test direct API URL (confirmed working with curl test)
-  const directUrl = `${API_URL}/upload/${entityType}/${entityId}`;
+  const directUrl = `${API_URL}/upload/${mappedEntityType}/${entityId}`;
   console.log(`Trying direct upload URL: ${directUrl}`);
   
   try {
@@ -119,7 +119,8 @@ export const uploadMedia = async (entityType, entityId, file) => {
  * @returns {string} - The URL to stream the media
  */
 export const getMediaUrl = (entityType, entityId) => {
-  return `${API_URL}/stream/${entityType}/${entityId}`;
+  const mappedEntityType = ENTITY_TYPE_MAPPING[entityType] || entityType;
+  return `${API_URL}/stream/${mappedEntityType}/${entityId}`;
 };
 
 /**
