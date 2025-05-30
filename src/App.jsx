@@ -39,6 +39,7 @@ import ImageUploadTest from './Components/ImageUploadTest';
 
 import AdminDashboard from './Pages/AdminDashboard';
 
+import AiRecommendation from './Components/AiForm';
 
 function App() {
   return (
@@ -104,6 +105,9 @@ function App() {
 
         {/* Image Upload Test */}
         <Route path="/image-upload-test" element={<ImageUploadTest />} />
+
+        {/* AI Recommendation */}
+        <Route path="/ai-recommendation" element={<AiRecommendation />} />
 
         {/* Ruta por defecto */}
         <Route path="*" element={<AdminDashboard />} />      </Routes>
