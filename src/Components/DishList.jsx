@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllDishes, deleteDish } from '../Services/DishService';
+import { getAllCategories } from '../Services/CategoryService';
 
 export default function DishList() {
   const [dishes, setDishes] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const loadData = async () => {
     const res = await getAllDishes();
+    const catRes = await getAllCategories();
     setDishes(res.data);
+    setCategories(catRes.data);
   };
 
   useEffect(() => {
@@ -40,7 +44,7 @@ export default function DishList() {
             <tr key={dish.id}>
               <td>{dish.name}</td>
               <td>{dish.description}</td>
-              <td>{dish.category}</td>
+              <td>{categories.find(cat => cat.id === dish.categoryId).name ?? 'Categoría no existente'}</td>
               <td>
                 {dish.image ? <img src={dish.image} alt="dish" width={80} /> : 'Sin imagen'}
               </td>
