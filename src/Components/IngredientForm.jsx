@@ -8,24 +8,18 @@ export default function IngredientForm() {
   const navigate = useNavigate();
   const isEdit = !!id;
 
-  const [dishes, setDishes] = useState([]);
   const [form, setForm] = useState({
     description: '',
     carbohydrates: '',
     proteins: '',
     fats: '',
     image: '',
-    dishes: [],
   });
 
   useEffect(() => {
-    getAllDishes().then(res => setDishes(res.data));
     if (isEdit) {
       getIngredientById(id).then(res => {
-        setForm({
-          ...res.data,
-          dishes: res.data.dishes.map(d => d.id),
-        });
+        setForm(res.data);
       });
     }
   }, [id]);
@@ -35,24 +29,9 @@ export default function IngredientForm() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleDishChange = (e) => {
-    const { value, checked } = e.target;
-    const id = parseInt(value);
-    setForm(prevForm => ({
-      ...prevForm,
-      dishes: checked
-        ? [...prevForm.dishes, id]
-        : prevForm.dishes.filter(d => d !== id),
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      ...form,
-      dishes: form.dishes.map(id => ({ id })),
-    };
-    isEdit ? await updateIngredient(id, data) : await createIngredient(data);
+    isEdit ? await updateIngredient(id, form) : await createIngredient(form);
     navigate('/ingredients');
   };
 
@@ -79,23 +58,6 @@ export default function IngredientForm() {
         <div className="mb-3">
           <label>Imagen (URL)</label>
           <input name="image" className="form-control" value={form.image} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Platos</label>
-          <div>
-            {dishes.map(d => (
-              <div key={d.id} className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  value={d.id}
-                  checked={form.dishes.includes(d.id)}
-                  onChange={handleDishChange}
-                />
-                <label className="form-check-label">{d.name}</label>
-              </div>
-            ))}
-          </div>
         </div>
         <button className="btn btn-success">Guardar</button>
       </form>
