@@ -33,7 +33,7 @@ export default function ExerciseList() {
           <i className="fas fa-plus me-2"></i>Nuevo Ejercicio
         </Link>
       </div>
-      
+
       <div className="card fitai-card">
         <div className="card-body p-0">
           <table className="table fitai-table mb-0">
@@ -50,9 +50,10 @@ export default function ExerciseList() {
             </thead>
             <tbody>
               {exercises.map((exercise) => (
-                <tr key={exercise.id}>                  <td>
+                <tr key={exercise.id}>
+                <td>
                     {exercise.hasImage ? (
-                      <img 
+                      <img
                         src={getMediaUrl('exercise', exercise.id)}
                         alt={exercise.name}
                         className="img-thumbnail"
