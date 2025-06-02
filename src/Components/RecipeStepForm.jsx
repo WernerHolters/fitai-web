@@ -9,6 +9,7 @@ export default function RecipeStepForm() {
   const isEdit = !!id;
 
   const [form, setForm] = useState({
+    id: null,
     description: '',
     estimatedTime: '',
     stepOrder: '',
@@ -20,7 +21,10 @@ export default function RecipeStepForm() {
   useEffect(() => {
     getAllRecipes().then(res => setRecipes(res.data));
     if (isEdit) {
-      getRecipeStepById(id).then(res => setForm(res.data));
+      getRecipeStepById(id).then(res => setForm({
+        ...res.data,
+        recipeId: res.data.recipeId || ''
+      },));
     }
   }, [id]);
 
