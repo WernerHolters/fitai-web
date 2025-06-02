@@ -35,6 +35,7 @@ export default function DishList() {
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Categoría</th>
+            <th>Ingredientes</th>
             <th>Imagen</th>
             <th>Acciones</th>
           </tr>
@@ -44,7 +45,12 @@ export default function DishList() {
             <tr key={dish.id}>
               <td>{dish.name}</td>
               <td>{dish.description}</td>
-              <td>{categories.find(cat => cat.id === dish.categoryId).name ?? 'Categoría no existente'}</td>
+              <td>{categories.find(cat => cat.id === dish.categoryId)?.name ?? 'Categoría no existente'}</td>
+              <td>
+                {dish.ingredients && dish.ingredients.length > 0
+                  ? dish.ingredients.map(ing => ing.description).join(', ')
+                  : 'Sin ingredientes'}
+              </td>
               <td>
                 {dish.image ? <img src={dish.image} alt="dish" width={80} /> : 'Sin imagen'}
               </td>
