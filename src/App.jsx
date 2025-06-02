@@ -40,77 +40,84 @@ import ImageUploadTest from './Components/ImageUploadTest';
 import AdminDashboard from './Pages/AdminDashboard';
 
 import AiRecommendation from './Components/AiForm';
+import MealPlanVariantList from './Components/MealPlanVariantList';
+import MealPlanVariantForm from './Components/MealPlanVariantForm';
 
 function App() {
   return (
     <Router>
       <Navbar />
       <div className="main-container">
-      <Routes>
-        {/* Dashboard principal */}
-        <Route path="/" element={<AdminDashboard />} />
+        <Routes>
+          {/* Dashboard principal */}
+          <Route path="/" element={<AdminDashboard />} />
 
-        {/* Unidades de medida */}
-        <Route path="/units" element={<UnitOfMeasureList />} />
-        <Route path="/units/new" element={<UnitOfMeasureForm />} />
-        <Route path="/units/edit/:id" element={<UnitOfMeasureForm />} />
+          {/* Unidades de medida */}
+          <Route path="/units" element={<UnitOfMeasureList />} />
+          <Route path="/units/new" element={<UnitOfMeasureForm />} />
+          <Route path="/units/edit/:id" element={<UnitOfMeasureForm />} />
 
-        {/* Ingredientes */}
-        <Route path="/ingredients" element={<IngredientList />} />
-        <Route path="/ingredients/new" element={<IngredientForm />} />
-        <Route path="/ingredients/edit/:id" element={<IngredientForm />} />
+          {/* Ingredientes */}
+          <Route path="/ingredients" element={<IngredientList />} />
+          <Route path="/ingredients/new" element={<IngredientForm />} />
+          <Route path="/ingredients/edit/:id" element={<IngredientForm />} />
 
-        {/* Dishes */}
-        <Route path="/dishes" element={<DishList />} />
-        <Route path="/dishes/new" element={<DishForm />} />
-        <Route path="/dishes/edit/:id" element={<DishForm />} />        {/* Recetas */}
-        <Route path="/recipes" element={<RecipeList />} />
-        <Route path="/recipes/new" element={<RecipeForm />} />
-        <Route path="/recipes/edit/:id" element={<RecipeForm />} />
+          {/* Dishes */}
+          <Route path="/dishes" element={<DishList />} />
+          <Route path="/dishes/new" element={<DishForm />} />
+          <Route path="/dishes/edit/:id" element={<DishForm />} />        {/* Recetas */}
+          <Route path="/recipes" element={<RecipeList />} />
+          <Route path="/recipes/new" element={<RecipeForm />} />
+          <Route path="/recipes/edit/:id" element={<RecipeForm />} />
 
-        {/* Categories */}
-        <Route path="/categories" element={<CategoryList />} />
-        <Route path="/categories/new" element={<CategoryForm />} />
-        <Route path="/categories/edit/:id" element={<CategoryForm />} />
+          {/* Categories */}
+          <Route path="/categories" element={<CategoryList />} />
+          <Route path="/categories/new" element={<CategoryForm />} />
+          <Route path="/categories/edit/:id" element={<CategoryForm />} />
 
-        {/* Cooking Methods */}
-        <Route path="/cooking-methods" element={<CookingMethodList />} />
-        <Route path="/cooking-methods/new" element={<CookingMethodForm />} />
-        <Route path="/cooking-methods/edit/:id" element={<CookingMethodForm />} />
+          {/* Cooking Methods */}
+          <Route path="/cooking-methods" element={<CookingMethodList />} />
+          <Route path="/cooking-methods/new" element={<CookingMethodForm />} />
+          <Route path="/cooking-methods/edit/:id" element={<CookingMethodForm />} />
 
-        {/* Muscle Groups */}
-        <Route path="/muscle-groups" element={<MuscleGroupList />} />
-        <Route path="/muscle-groups/new" element={<MuscleGroupForm />} />
-        <Route path="/muscle-groups/edit/:id" element={<MuscleGroupForm />} />
+          {/* Muscle Groups */}
+          <Route path="/muscle-groups" element={<MuscleGroupList />} />
+          <Route path="/muscle-groups/new" element={<MuscleGroupForm />} />
+          <Route path="/muscle-groups/edit/:id" element={<MuscleGroupForm />} />
 
-        {/* Exercises */}
-        <Route path="/exercises" element={<ExerciseList />} />
-        <Route path="/exercises/new" element={<ExerciseForm />} />
-        <Route path="/exercises/edit/:id" element={<ExerciseForm />} />
+          {/* Exercises */}
+          <Route path="/exercises" element={<ExerciseList />} />
+          <Route path="/exercises/new" element={<ExerciseForm />} />
+          <Route path="/exercises/edit/:id" element={<ExerciseForm />} />
 
-        {/* Plan Types */}
-        <Route path="/plan-types" element={<PlanTypeList />} />
-        <Route path="/plan-types/new" element={<PlanTypeForm />} />
-        <Route path="/plan-types/edit/:id" element={<PlanTypeForm />} />
+          {/* Plan Types */}
+          <Route path="/plan-types" element={<PlanTypeList />} />
+          <Route path="/plan-types/new" element={<PlanTypeForm />} />
+          <Route path="/plan-types/edit/:id" element={<PlanTypeForm />} />
 
-        {/* Workout Plans */}
-        <Route path="/workout-plans" element={<WorkoutPlanList />} />
-        <Route path="/workout-plans/new" element={<WorkoutPlanForm />} />
-        <Route path="/workout-plans/edit/:id" element={<WorkoutPlanForm />} />
+          {/* Workout Plans */}
+          <Route path="/workout-plans" element={<WorkoutPlanList />} />
+          <Route path="/workout-plans/new" element={<WorkoutPlanForm />} />
+          <Route path="/workout-plans/edit/:id" element={<WorkoutPlanForm />} />
 
-        {/* Meal Plans */}
-        <Route path="/meal-plans" element={<MealPlanList />} />
-        <Route path="/meal-plans/new" element={<MealPlanForm />} />
-        <Route path="/meal-plans/edit/:id" element={<MealPlanForm />} />
+          {/* Meal Plans */}
+          <Route path="/meal-plans" element={<MealPlanList />} />
+          <Route path="/meal-plans/new" element={<MealPlanForm />} />
+          <Route path="/meal-plans/edit/:id" element={<MealPlanForm />} />
 
-        {/* Image Upload Test */}
-        <Route path="/image-upload-test" element={<ImageUploadTest />} />
+          {/* Meal Plan Variants */}
+          <Route path="/meal-plan-variants" element={<MealPlanVariantList />} />
+          <Route path="/meal-plan-variants/new" element={<MealPlanVariantForm />} />
+          <Route path="/meal-plan-variants/edit/:id" element={<MealPlanVariantForm />} />
 
-        {/* AI Recommendation */}
-        <Route path="/ai-recommendation" element={<AiRecommendation />} />
+          {/* Image Upload Test */}
+          <Route path="/image-upload-test" element={<ImageUploadTest />} />
 
-        {/* Ruta por defecto */}
-        <Route path="*" element={<AdminDashboard />} />      </Routes>
+          {/* AI Recommendation */}
+          <Route path="/ai-recommendation" element={<AiRecommendation />} />
+
+          {/* Ruta por defecto */}
+          <Route path="*" element={<AdminDashboard />} />      </Routes>
       </div>
     </Router>
   );

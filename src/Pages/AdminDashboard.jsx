@@ -45,6 +45,10 @@ export default function AdminDashboard() {
                   <div className="icon-container"><i className="fas fa-clipboard-list"></i></div>
                   Planes de Alimentación
                 </Link>
+                <Link to="/meal-plan-variants" className="list-group-item list-group-item-action">
+                  <div className="icon-container"><i className="fas fa-random"></i></div>
+                  Variantes de Planes de Alimentación
+                </Link>
               </div>
             </div>
           </div>
