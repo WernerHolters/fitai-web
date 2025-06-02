@@ -35,7 +35,7 @@ export default function AdminDashboard() {
                 </Link>
                 <Link to="/categories" className="list-group-item list-group-item-action">
                   <div className="icon-container"><i className="fas fa-tags"></i></div>
-                  Categorías
+                  Categorías de Platos
                 </Link>
                 <Link to="/plan-types" className="list-group-item list-group-item-action">
                   <div className="icon-container"><i className="fas fa-list-alt"></i></div>
