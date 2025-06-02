@@ -29,6 +29,10 @@ export default function AdminDashboard() {
                   <div className="icon-container"><i className="fas fa-book-open"></i></div>
                   Recetas
                 </Link>
+                <Link to="/recipe-steps" className="list-group-item list-group-item-action">
+                  <div className="icon-container"><i className="fas fa-list-ol"></i></div>
+                  Pasos de Receta
+                </Link>
                 <Link to="/cooking-methods" className="list-group-item list-group-item-action">
                   <div className="icon-container"><i className="fas fa-fire"></i></div>
                   Métodos de Cocción

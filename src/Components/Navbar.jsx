@@ -49,6 +49,11 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
+                  <Link className="dropdown-item" to="/recipe-steps">
+                    Pasos de Receta
+                  </Link>
+                </li>
+                <li>
                   <Link className="dropdown-item" to="/cooking-methods">
                     Métodos de Cocción
                   </Link>

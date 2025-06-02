@@ -42,6 +42,8 @@ import AdminDashboard from './Pages/AdminDashboard';
 import AiRecommendation from './Components/AiForm';
 import MealPlanVariantList from './Components/MealPlanVariantList';
 import MealPlanVariantForm from './Components/MealPlanVariantForm';
+import RecipeStepList from './Components/RecipeStepList';
+import RecipeStepForm from './Components/RecipeStepForm';
 
 function App() {
   return (
@@ -65,10 +67,17 @@ function App() {
           {/* Dishes */}
           <Route path="/dishes" element={<DishList />} />
           <Route path="/dishes/new" element={<DishForm />} />
-          <Route path="/dishes/edit/:id" element={<DishForm />} />        {/* Recetas */}
+          <Route path="/dishes/edit/:id" element={<DishForm />} />
+
+          {/* Recetas */}
           <Route path="/recipes" element={<RecipeList />} />
           <Route path="/recipes/new" element={<RecipeForm />} />
           <Route path="/recipes/edit/:id" element={<RecipeForm />} />
+
+          {/* Recipe Steps */}
+          <Route path="/recipe-steps" element={<RecipeStepList />} />
+          <Route path="/recipe-steps/new" element={<RecipeStepForm />} />
+          <Route path="/recipe-steps/edit/:id" element={<RecipeStepForm />} />
 
           {/* Categories */}
           <Route path="/categories" element={<CategoryList />} />
