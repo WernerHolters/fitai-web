@@ -4,7 +4,7 @@ export default function AdminDashboard() {
   return (
     <div className="admin-dashboard">
       <h2 className="dashboard-header">Panel de Administración</h2>
-      
+
       <div className="row">
         <div className="col-md-6">
           <div className="card fitai-card mb-4">
@@ -35,7 +35,11 @@ export default function AdminDashboard() {
                 </Link>
                 <Link to="/categories" className="list-group-item list-group-item-action">
                   <div className="icon-container"><i className="fas fa-tags"></i></div>
-                  Categorías
+                  Categorías de Platos
+                </Link>
+                <Link to="/plan-types" className="list-group-item list-group-item-action">
+                  <div className="icon-container"><i className="fas fa-list-alt"></i></div>
+                  Tipos de Planes de Alimentación
                 </Link>
                 <Link to="/meal-plans" className="list-group-item list-group-item-action">
                   <div className="icon-container"><i className="fas fa-clipboard-list"></i></div>
@@ -45,7 +49,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
-        
+
         <div className="col-md-6">
           <div className="card fitai-card">
             <div className="card-header">
@@ -60,10 +64,6 @@ export default function AdminDashboard() {
                 <Link to="/exercises" className="list-group-item list-group-item-action">
                   <div className="icon-container"><i className="fas fa-running"></i></div>
                   Ejercicios
-                </Link>
-                <Link to="/plan-types" className="list-group-item list-group-item-action">
-                  <div className="icon-container"><i className="fas fa-list-alt"></i></div>
-                  Tipos de Plan
                 </Link>
                 <Link to="/workout-plans" className="list-group-item list-group-item-action">
                   <div className="icon-container"><i className="fas fa-calendar-alt"></i></div>
