@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAllUnits, deleteUnit } from '../Services/UnitOfMeasureService';
 import { Link } from 'react-router-dom';
-import './UnitOfMeasureList.css';
 
 export default function UnitOfMeasureList() {
   const [units, setUnits] = useState([]);
