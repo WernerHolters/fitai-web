@@ -69,7 +69,7 @@ export default function MealPlanForm() {
         name: mealPlan.name,
         description: mealPlan.description,
         planTypeId: mealPlan.planTypeId ? Number(mealPlan.planTypeId) : null,
-        dishes: mealPlan.dishIds.map(id => ({ id })) // ✅ esto es lo que backend espera
+        dishes: mealPlan.dishIds.map(id => ({ id }))
       };
 
       if (id) {

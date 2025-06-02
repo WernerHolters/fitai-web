@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createDish, getDishById, updateDish } from '../Services/DishService';
+import { getAllCategories } from '../Services/CategoryService';
 
 export default function DishForm() {
   const { id } = useParams();
@@ -10,11 +11,19 @@ export default function DishForm() {
   const [form, setForm] = useState({
     name: '',
     description: '',
-    category: '',
+    categoryId: 0, // This value will never exist due to identity IDs starting at 1, only for initialization and type safety
     image: '',
   });
 
+  const [categories, setCategories] = useState([]);
+
+  const loadCategories = async () => {
+    const res = await getAllCategories();
+    setCategories(res.data);
+  }
+
   useEffect(() => {
+    loadCategories();
     if (isEdit) {
       getDishById(id).then(res => setForm(res.data));
     }
@@ -44,7 +53,14 @@ export default function DishForm() {
         </div>
         <div className="mb-3">
           <label>Categoría</label>
-          <input name="category" className="form-control" value={form.category} onChange={handleChange} />
+          <select name="categoryId" className="form-select" value={form.categoryId} onChange={handleChange} required>
+            <option value="0">Seleccionar categoría</option>
+            {categories.map(category => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-3">
           <label>Imagen (URL)</label>
