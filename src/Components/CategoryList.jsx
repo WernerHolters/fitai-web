@@ -26,13 +26,13 @@ export default function CategoryList() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="form-header">
           <i className="fas fa-tags me-2 text-primary"></i>
-          Categorías
+          Categorías de Platos
         </h2>
         <Link to="/categories/new" className="btn btn-primary">
           <i className="fas fa-plus me-2"></i>Nueva Categoría
         </Link>
       </div>
-      
+
       <div className="card fitai-card">
         <div className="card-body p-0">
           <table className="table fitai-table mb-0">
@@ -50,7 +50,7 @@ export default function CategoryList() {
                 <tr key={category.id}>
                   <td>
                     {category.image ? (
-                      <img 
+                      <img
                         src={getMediaUrl('category', category.id)}
                         alt={category.name}
                         className="img-thumbnail"

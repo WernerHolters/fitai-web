@@ -55,7 +55,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/categories">
-                    Categorías
+                    Categorías de Platos
                   </Link>
                 </li>
                 <li>
