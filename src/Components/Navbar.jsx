@@ -63,6 +63,11 @@ export default function Navbar() {
                     Planes de Alimentación
                   </Link>
                 </li>
+                <li>
+                  <Link className="dropdown-item" to="/meal-plan-variants">
+                    Variantes de Planes de Alimentación
+                  </Link>
+                </li>
               </ul>
             </li>
             <li className="nav-item dropdown">
