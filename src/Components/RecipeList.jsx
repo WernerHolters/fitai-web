@@ -28,7 +28,7 @@ export default function RecipeList() {
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>Título</th>
+            <th>Nombre</th>
             <th>Descripción</th>
             <th>Imagen</th>
             <th>Ingredientes</th>
@@ -38,7 +38,7 @@ export default function RecipeList() {
         <tbody>
           {recipes.map(recipe => (
             <tr key={recipe.id}>
-              <td>{recipe.title}</td>
+              <td>{recipe.name}</td>
               <td>{recipe.description}</td>
               <td>
                 {recipe.image ? <img src={recipe.image} alt="receta" width={80} /> : 'Sin imagen'}

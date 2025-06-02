@@ -10,7 +10,7 @@ export default function RecipeForm() {
   const isEdit = !!id;
 
   const [form, setForm] = useState({
-    title: '',
+    name: '',
     description: '',
     image: '',
     ingredients: [],
@@ -72,11 +72,11 @@ export default function RecipeForm() {
       <h2>{isEdit ? 'Editar Receta' : 'Agregar Receta'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label>Título</label>
+          <label>Nombre</label>
           <input
-            name="title"
+            name="name"
             className="form-control"
-            value={form.title}
+            value={form.name}
             onChange={handleChange}
             required
           />
