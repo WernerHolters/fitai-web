@@ -1,0 +1,237 @@
+:root {
+  /* Primary color palette */
+  --primary: #4c6aaf;
+  --primary-dark: #385f8e;
+  --primary-light: #8195c7;
+  --primary-bg: #E8F5E9;
+  
+  /* Accent colors */
+  --accent: #FF5722;
+  --accent-dark: #E64A19;
+  
+  /* Neutral colors */
+  --dark: #263238;
+  --medium: #607D8B;
+  --light: #ECEFF1;
+  
+  /* Status colors */
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --danger: #F44336;
+  --info: #2196F3;
+}
+
+/* Dashboard styling */
+.admin-dashboard {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  color: var(--dark);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 1rem;
+}
+
+.section-title {
+  color: var(--primary-dark);
+  font-weight: 600;
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: '';
+  width: 10px;
+  height: 24px;
+  background-color: var(--primary);
+  margin-right: 10px;
+}
+
+.card-container {
+  margin-bottom: 2rem;
+}
+
+/* List group styling */
+.list-group-item {
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+  border-left: 4px solid var(--primary);
+  background-color: var(--primary-bg);
+  color: var(--primary-dark);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item i {
+  margin-right: 10px;
+  color: var(--primary);
+}
+
+/* Card styling */
+.fitai-card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fitai-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.fitai-card .card-header {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Table styling */
+.fitai-table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fitai-table thead th {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+}
+
+.fitai-table tbody tr:nth-child(odd) {
+  background-color: var(--light);
+}
+
+.fitai-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.fitai-table tbody tr:hover {
+  background-color: var(--primary-bg);
+}
+
+/* Form styling */
+.fitai-form {
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fitai-form .form-label {
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.fitai-form .form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+}
+
+.form-header {
+  color: var(--primary-dark);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+/* Button styling */
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  border-color: var(--warning);
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-action {
+  border-radius: 50px;
+  padding: 0.25rem 1rem;
+  margin: 0 0.25rem;
+}
+
+/* Icon styling */
+.icon-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: var(--primary-bg);
+}
+
+.icon-container i {
+  color: var(--primary);
+}
+
+/* Navigation and layout */
+.fitai-navbar {
+  background-color: var(--primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fitai-navbar .navbar-brand {
+  color: white;
+  font-weight: bold;
+}
+
+.fitai-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.3s ease;
+}
+
+.fitai-navbar .nav-link:hover {
+  color: white;
+}
+
+.main-container {
+  padding-top: 2rem;
+  min-height: calc(100vh - 56px);
+  background-color: #f8f9fa;
+}
+
+/* Utilities */
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary) !important;
+}
+
+.rounded-pill-right {
+  border-top-right-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
+}
+
+.ingredient-list {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.ingredient-list .badge {
+  font-size: 0.75rem;
+}
